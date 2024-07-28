@@ -37,18 +37,27 @@ def addDataToFirestore(userId, data:dict):
     fuserId = userId.replace("/", "-")
     collection_students.document(fuserId).set(data)
 
-def getPasswordFromFirestore(userid):
+def getPasswordFromFirestore(userid) -> str:
 
     fuserId = userid.replace("/", "-")
     doc_ref = collection_students.document(fuserId).get()
     password = doc_ref.to_dict().get('password')
-    return password
+
+    if(password is None):
+        raise Exception("Username doesn't exists")
+    else:
+        return password
 
 def findFirestoreStudent(userid):
 
     fuserId = userid.replace("/", "-")
     doc_ref = collection_students.document(fuserId).get()
     return doc_ref.exists
+
+def updateDataOfFirestore(userId, data:dict):
+    fuserId = userId.replace("/", "-")
+    collection_students.document(fuserId).update(data)
+
 
 
 ##-----------------------CONFIG-------------------------##
