@@ -6,6 +6,7 @@ class Student:
     student_id: str = ""
     roll_no: str= ""
     enrollment_no: str= ""
+    category:str =""
     email: str= ""
     session: str= ""
     admission_date: str= ""

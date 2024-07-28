@@ -19,6 +19,7 @@ def storeUserdataToDatabase(userid, password, time_taken):
             "motherName":student.mother_name,
             "dob":student.dob,
             "gender":student.gender,
+            "category":student.category,
             "studentId":student.student_id,
             "session":student.session,
             "enrollmentNo.":student.enrollment_no,
