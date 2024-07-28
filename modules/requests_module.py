@@ -129,7 +129,7 @@ def parseStudentDetailsHtmlToStudent(html):
     return Student(
         name=soup.find('span', id='PageContent_lblName').text,
         student_id=soup.find('span', id='PageContent_lblID').text,
-        category= soup.find('span', id ='PageContent_lblCategory').text
+        category= soup.find('span', id ='PageContent_lblCategory').text,
         roll_no=soup.find('span', id='PageContent_lblRollNo').text,
         enrollment_no=soup.find('span', id='PageContent_lblEnrollNo').text,
         email=soup.find('span', id='PageContent_lblEmail').text,
