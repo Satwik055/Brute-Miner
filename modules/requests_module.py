@@ -27,7 +27,7 @@ def bruteforceLogin(userId:str, start:int, batchSize:int = 100, threads:int =10)
                 return f.result()
         
         if p>9800:
-            raise Exception("INVALID_USRNAME")
+            return None
             
         p+=batchSize
         q+=batchSize

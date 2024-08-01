@@ -58,9 +58,57 @@ def updateDataOfFirestore(userId, data:dict):
     fuserId = userId.replace("/", "-")
     collection_students.document(fuserId).update(data)
 
+#-------------------------TEMP-----------------------------#
+
+def getStudentFamilyFromFirestore(userId:str):
+    fuserId = userId.replace("/", "-")
+    doc_ref = collection_students.document(fuserId).get()
+
+    if(doc_ref.exists is False):
+        raise Exception("Document not found")
+    
+    student_name = doc_ref.to_dict().get("studentName")
+    father_name = doc_ref.to_dict().get("fatherName")
+    mother_name = doc_ref.to_dict().get("motherName")
 
 
-##-----------------------CONFIG-------------------------##
+    if(student_name is None):
+        raise Exception("Student not found")
+    
+    return student_name, father_name, mother_name
+
+def setStudentFamilyToFirestore(userId:str, student_name:str, father_name:str, mother_name:str):
+    fuserId = userId.replace("/", "-")
+    data =  {
+        "studentName":student_name,
+        "fatherName": father_name,
+        "motherName": mother_name
+    }
+    collection_students.document(fuserId).update(data)
+
+def isStudentValid(userid) -> bool:
+    fuserId = userid.replace("/", "-")
+    doc_ref = collection_students.document(fuserId).get()
+    password = doc_ref.to_dict().get('password')
+
+    if(password is not None):
+        return True
+    else:
+        return False
+
+def isCategoryAvailable(userid):
+    fuserId = userid.replace("/", "-")
+    doc_ref = collection_students.document(fuserId).get()
+    category = doc_ref.to_dict().get('category')
+
+    if(category is None):
+        return False
+    else:
+        return True
+
+
+
+#------------------------CONFIG-------------------------#
 
 def getUserRangeConfig():
     collection = database.collection("Config")

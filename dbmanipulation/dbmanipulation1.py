@@ -33,7 +33,7 @@ def updateUserdataToDatabase(userid, password):
 
 
 def main():
-    for i in range(300, 500):
+    for i in range(334, 337):
         formatted = '{0:04}'.format(i)
         userid = "2023/" + formatted
 
@@ -45,8 +45,4 @@ def main():
         except Exception as e:
             print(f"Error: {str(e)}")
 
-
-
-
-main()
 
