@@ -3,13 +3,13 @@ from Student import *
 
 class StudentDatabase(ABC):
     @abstractmethod
-    def addStudentData(self, username:str, data:dict):
+    def addStudentData(self, userid:str, data:dict):
         pass
 
     @abstractmethod
-    def updateStudentData(self, username:str, data:dict):
+    def updateStudentData(self, userid:str, data:dict):
         pass
 
     @abstractmethod
-    def getStudentData(self, username) -> Student:
+    def getStudentData(self, userid) -> Student:
         pass

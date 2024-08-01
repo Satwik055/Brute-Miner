@@ -22,7 +22,7 @@ def storeUserdataToDatabase(userid, password, timeTaken):
             "gender":student.gender,
             "studentId":student.student_id,
             "session":student.session,
-            "enrollmentNo.":student.enrollment_no,
+            "enrollmentNo":student.enrollment_no,
             "admissionDate":student.admission_date,
             "studentType":student.student_type,
             }
@@ -46,18 +46,16 @@ def storeNullUserToDatabase(userid, timeTaken):
         "enrollmentNo":None,
         "admissionDate":None,
         "studentType":None,
-        "timeTake":timeTaken
+        "timeTaken":timeTaken
     }
     
     addDataToFirestore(userid, data)
     
-
-
 def main():
     startuid , stopuid = getUserRangeConfig()
     print(f"Got username range from config: {startuid}, {stopuid}")
 
-    for i in range(1000, 1005):
+    for i in range(startuid, stopuid):
 
         formatted = '{0:04}'.format(i)
         userid = "2023/" + formatted
@@ -94,11 +92,6 @@ def main():
 
         except Exception as e:
             print("Error: " + str(e))
-            data = {
-                "error":str(e),
-                }
-            storeNullUserToDatabase(userid, "")
-
 
 
 if __name__ == "__main__":

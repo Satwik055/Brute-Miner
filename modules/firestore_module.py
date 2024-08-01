@@ -1,7 +1,6 @@
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
-import platform
 
 
 PRIVATE_KEY = {
@@ -19,7 +18,7 @@ PRIVATE_KEY = {
 }
 
 cred = credentials.Certificate(PRIVATE_KEY)
-firebase_admin.initialize_app(cred)
+# app = firebase_admin.initialize_app(cred, "DOG")
 
 database = firestore.client()
 collection_students = database.collection("Students")
@@ -28,8 +27,7 @@ collection_students = database.collection("Students")
 def initStudentToFirestore(userId):
     fuserId = userId.replace("/", "-")
     data = { 
-        "Password":"working...",
-        "Node": platform.node()
+        "password":"working...",
         }
     collection_students.document(fuserId).set(data)
 
@@ -49,7 +47,6 @@ def getPasswordFromFirestore(userid) -> str:
         return password
 
 def findFirestoreStudent(userid):
-
     fuserId = userid.replace("/", "-")
     doc_ref = collection_students.document(fuserId).get()
     return doc_ref.exists

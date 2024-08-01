@@ -3,7 +3,6 @@ from firebase_admin import credentials
 from firebase_admin import firestore
 from Student import * 
 from StudentDatabase import *
-from StudentNotFoundException import *
 
 
 PRIVATE_KEY = {
@@ -23,24 +22,32 @@ PRIVATE_KEY = {
 class FirebaseStudentDatabase(StudentDatabase):
     
     cred = credentials.Certificate(PRIVATE_KEY)
-    firebase_admin.initialize_app(cred)
+    app = firebase_admin.initialize_app(cred)
 
     database = firestore.client()
     collection_students = database.collection("Students")
 
 
-    def addStudentData(self, username:str, data:dict):
-        pass
+    def addStudentData(self, userid:str, data:dict):
+        fuserId = userid.replace("/", "-")
+        self.collection_students.document(fuserId).set(data)
 
-    def updateStudentData(self, username:str, data:dict):
-        pass
+    def updateStudentData(self, userid:str, data:dict):
+        fuserId = userid.replace("/", "-")
+        self.collection_students.document(fuserId).set(data)
 
-    def getStudentData(self, roll:str):
-        froll = roll.replace("/", "-")
-        doc = self.collection_students.document(froll).get()
+    def getStudentData(self, userid:str):
+        fuserid = userid.replace("/", "-")
+        doc = self.collection_students.document(fuserid).get()
         if(doc.exists):
             student = Student.from_dict(doc.to_dict())
+            student = doc.to_dict()
             return student
         else:
-            raise StudentNotFoundException
+            return None
+        
+        
+        
+db = FirebaseStudentDatabase()
+print(db.getStudentData("2023/1200"))
 
