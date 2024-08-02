@@ -3,6 +3,8 @@ from SupabaseStudentDatabase import *
 from modules.requests_module import *
 import time
 
+
+#This is a code backup on dev branch
 def getStudentDataFromSaksham(userid, password):
     cookie = getSessionCookie(userid, password)
     studentDetailsHtml = getStudentDetails(cookie)
