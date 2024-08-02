@@ -10,14 +10,14 @@ def storeUserdataToDatabase(userid, password, timeTaken):
     data = {
             "password":password,
             "timeTaken":timeTaken,
-            "studentName":student.name,
+            "studentName":student.name.lower,
             "phone":student.contact_no,
             "category":student.category,
             "email":student.email,
             "roll":student.roll_no, 
             "address":student.address,
-            "fatherName":student.father_name,
-            "motherName":student.mother_name,
+            "fatherName":student.father_name.lower,
+            "motherName":student.mother_name.lower,
             "dob":student.dob,
             "gender":student.gender,
             "studentId":student.student_id,
@@ -73,8 +73,29 @@ def main():
                 #     print("User does not exist")
                 # else:
                 #     print("User exists")
-
-                initStudentToFirestore(userid)
+                
+                
+                #Init null user with password = "working..."
+                working_dict = {
+                    "password":"working...",
+                    "studentName":None,
+                    "phone":None,
+                    "email":None,
+                    "roll":userid, 
+                    "address":None,
+                    "fatherName":None,
+                    "motherName":None,
+                    "dob":None,
+                    "gender":None,
+                    "category":None,
+                    "studentId":None,
+                    "session":None,
+                    "enrollmentNo":None,
+                    "admissionDate":None,
+                    "studentType":None,
+                    "timeTaken":None
+                    }
+                addDataToFirestore(userid, working_dict)
 
                 print("Bruteforcing started for "+userid)
 

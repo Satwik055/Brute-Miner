@@ -1,7 +1,4 @@
 from StudentDatabase import *
-import os
-import json
-from StudentNotFoundException import *
 from supabase import create_client, Client
 
 class SupabaseStudentDatabase(StudentDatabase):
@@ -11,26 +8,55 @@ class SupabaseStudentDatabase(StudentDatabase):
     
     supabase:Client = create_client(url, key)
     
-    def addStudentData(self, username:str, data:dict):
-        print(username)
+    def addStudentData(self, userid:str, data:dict):
+        #working-> all feild null except password="working..."
+        #cracked but null -> all feild null
+        #cracked -> all feild populated
+        existing_row = self.supabase.table("Student").select('roll').eq('roll', userid).execute()
 
-    def updateStudentData(self, username:str, data:dict):
-        print(username)
+        if existing_row.data:
+            # Update the row if it exists
+            response = self.supabase.table("Student").update(data).eq('roll', userid).execute()
+        else:
+            # Insert a new row if it does not exist
+            response = self.supabase.table("Student").insert(data).execute()
+
         
-    def getStudentData(self, roll) -> Student:
-        response = self.supabase.table("Student").select("*").eq("roll", roll).execute()
+    def updateStudentData(self, userid:str, data:dict):
+        pass
+        
+    def getStudentData(self, userid):
+        response = self.supabase.table("Student").select("*").eq("roll", userid).execute()
         if(response.count is not None):
             student = Student.from_dict(response.data[0])
             return student
         else:
-            raise StudentNotFoundException
+            None
 
     
     
     
     
     
-    
+# db = SupabaseStudentDatabase()
+# userid = "2023/8888" 
+# null_dict = {
+#     "password":None,
+#     "studentName":None,
+#     "phone":None,
+#     "email":None,
+#     "roll":userid, 
+#     "address":None,
+#     "fatherName":None,
+#     "motherName":None,
+#     "dob":None,
+#     "gender":None,
+#     "category":None,
+#     "studentId":None,
+#     "session":None,
+#     "enrollmentNo":None,
+#     "admissionDate":None,
+#     "studentType":None,
+#     "timeTaken":None
+#     }
 
-db = SupabaseStudentDatabase()
-db.getStudentData("2023/00")
