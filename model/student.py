@@ -1,5 +1,6 @@
 class Student:
-    def __init__(self, password, studentName, category, phone, email, roll, address, fatherName, motherName, dob, gender, studentId, session, studentType, enrollmentNo, admissionDate, timeTaken):
+    def __init__(self, password, studentName, category, phone, email, roll, address, fatherName, motherName, dob,
+                 gender, studentId, session, studentType, enrollmentNo, admissionDate, timeTaken):
         self.password = password
         self.studentName = studentName
         self.category = category
@@ -21,7 +22,6 @@ class Student:
     def __repr__(self):
         return f"Student(password={self.password}, studentName={self.studentName}, category={self.category}, phone={self.phone}, email={self.email}, roll={self.roll}, address={self.address}, fatherName={self.fatherName}, motherName={self.motherName}, dob={self.dob}, gender={self.gender}, studentId={self.studentId}, session={self.session}, studentType={self.studentType}, enrollmentNo={self.enrollmentNo}, admissionDate={self.admissionDate}, timeTaken={self.timeTaken})"
 
-
     @staticmethod
     def from_dict(data: dict):
         return Student(
@@ -42,4 +42,4 @@ class Student:
             enrollmentNo=data['enrollmentNo'],
             admissionDate=data['admissionDate'],
             timeTaken=data['timeTaken']
-        )  
+        )
