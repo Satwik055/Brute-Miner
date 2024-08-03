@@ -11,17 +11,17 @@ class SupabaseStudentDatabase(StudentDatabase):
     supabase: Client = create_client(url, key)
 
     def addStudentData(self, userid: str, data: dict):
-        existing_row = self.supabase.table("Student").select('roll').eq('roll', userid).execute()
+        existing_row = self.supabase.table("student").select('roll').eq('roll', userid).execute()
         if existing_row.data:
-            self.supabase.table("Student").update(data).eq('roll', userid).execute()
+            self.supabase.table("student").update(data).eq('roll', userid).execute()
         else:
-            self.supabase.table("Student").insert(data).execute()
+            self.supabase.table("student").insert(data).execute()
 
     def updateStudentData(self, userid: str, data: dict):
         pass
 
     def getStudentData(self, userid):
-        response = self.supabase.table("Student").select("*").eq("roll", userid).execute()
+        response = self.supabase.table("student").select("*").eq("roll", userid).execute()
         if response.data:
             student = Student.from_dict(response.data[0])
             return student

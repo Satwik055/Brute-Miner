@@ -13,29 +13,14 @@ def main():
 
         try:
             if database.getStudentData(userid) is not None:
-                print(f" {userid} password already exist in database/being cracked")
+                print(f"{userid} password already exist in database/being cracked")
             else:
                 print(f"{userid} password not found in database")
 
                 # Working status set in database
                 working_dict = {
                     "password": "working...",
-                    "studentName": None,
-                    "phone": None,
-                    "email": None,
                     "roll": userid,
-                    "address": None,
-                    "fatherName": None,
-                    "motherName": None,
-                    "dob": None,
-                    "gender": None,
-                    "category": None,
-                    "studentId": None,
-                    "session": None,
-                    "enrollmentNo": None,
-                    "admissionDate": None,
-                    "studentType": None,
-                    "timeTaken": None
                 }
                 database.addStudentData(userid, data=working_dict)
 
@@ -50,23 +35,8 @@ def main():
 
                     # null student set in database
                     null_dict = {
-                        "password": None,
-                        "studentName": None,
-                        "phone": None,
-                        "email": None,
                         "roll": userid,
-                        "address": None,
-                        "fatherName": None,
-                        "motherName": None,
-                        "dob": None,
-                        "gender": None,
-                        "category": None,
-                        "studentId": None,
-                        "session": None,
-                        "enrollmentNo": None,
-                        "admissionDate": None,
-                        "studentType": None,
-                        "timeTaken": elapsedTime
+                        "time_taken": elapsedTime
                     }
                     database.addStudentData(userid, null_dict)
 
@@ -75,22 +45,22 @@ def main():
                     student = getStudentDataFromSaksham(userid, password)
                     student_dict = {
                         "password": password,
-                        "timeTaken": elapsedTime,
-                        "studentName": str(student.studentName.lower),
+                        "time_taken": elapsedTime,
+                        "student_name": str(student.student_name.lower),
                         "phone": student.phone,
                         "category": student.category,
                         "email": student.email,
                         "roll": student.roll,
                         "address": student.address,
-                        "fatherName": str(student.fatherName.lower),
-                        "motherName": str(student.motherName.lower),
+                        "father_name": str(student.father_name.lower),
+                        "mother_name": str(student.mother_name.lower),
                         "dob": student.dob,
                         "gender": student.gender,
-                        "studentId": student.studentId,
+                        "student_id": student.student_id,
                         "session": student.session,
-                        "enrollmentNo": student.enrollmentNo,
-                        "admissionDate": student.admissionDate,
-                        "studentType": student.studentType,
+                        "enrollment_no": student.enrollment_no,
+                        "admission_date": student.admission_date,
+                        "student_type": student.student_type,
                     }
                     database.addStudentData(userid, student_dict)
                     print(f"{userid} data retrieved and added to database")
@@ -101,3 +71,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# Error: {'code': 'PGRST204', 'details': None, 'hint': None, 'message': "Could not find the 'timeTaken' column of 'student' in the schema cache"}
