@@ -1,15 +1,17 @@
 FROM python:3.9
 
-WORKDIR /app
+WORKDIR /bruteit-miner
 
-COPY main.py .
+COPY app/ /bruteit-miner/app/
 
-COPY modules/ /app/modules/
+COPY database/ /bruteit-miner/database/
 
-COPY models/ /app/models/
+COPY model/ /bruteit-miner/model/
+
+COPY script/ /bruteit-miner/script/
 
 COPY requirements.txt .
 
-RUN pip install -r requirements.txt 
+RUN pip install -r requirements.txt
 
-CMD ["python", "./main.py"]
+CMD ["python", "./app/main.py"]
