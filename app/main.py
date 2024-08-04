@@ -43,17 +43,23 @@ def main():
                 else:
                     print("Password found: " + password)
                     student = getStudentDataFromSaksham(userid, password)
+
+                    # Names are scraped in  uppercase from saksham dashboard
+                    student_name = student.student_name.lower
+                    mother_name = student.mother_name.lower
+                    father_name = student.father_name.lower
+
                     student_dict = {
                         "password": password,
                         "time_taken": elapsedTime,
-                        "student_name": str(student.student_name.lower),
+                        "student_name": student_name,
+                        "father_name": father_name,
+                        "mother_name": mother_name,
                         "phone": student.phone,
                         "category": student.category,
                         "email": student.email,
                         "roll": student.roll,
                         "address": student.address,
-                        "father_name": str(student.father_name.lower),
-                        "mother_name": str(student.mother_name.lower),
                         "dob": student.dob,
                         "gender": student.gender,
                         "student_id": student.student_id,
@@ -72,4 +78,3 @@ def main():
 if __name__ == "__main__":
     main()
 
-# Error: {'code': 'PGRST204', 'details': None, 'hint': None, 'message': "Could not find the 'timeTaken' column of 'student' in the schema cache"}
