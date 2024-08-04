@@ -3,11 +3,20 @@ from script.http_scripts import *
 import time
 import logging
 
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+logger = logging.getLogger("main")
+
+
+class MainFilter(logging.Filter):
+    def filter(self, record):
+        return record.name == 'main'
+
+
+for handler in logging.getLogger().handlers:
+    handler.addFilter(MainFilter())
+
 
 def main():
-    logging.basicConfig(level=logging.INFO, format='[%(asctime)s] - %(levelname)s - %(message)s')
-    logger = logging.getLogger()
-
     database = SupabaseStudentDatabase()
 
     for i in range(1203, 1300):
@@ -42,8 +51,8 @@ def main():
 
                     # null student set in database
                     null_dict = {
-                        "roll": userid,
-                        "time_taken": elapsedTime
+                        "time_taken": elapsedTime,
+                        "password": None
                     }
                     database.addStudentData(userid, null_dict)
 
