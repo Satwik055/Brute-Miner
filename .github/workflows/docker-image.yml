@@ -1,6 +1,5 @@
 name: Publish Docker image
 
-#pushing
 on:
   push:
     branches: ["main"]
@@ -33,5 +32,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+          tags: satwik055/brute-miner:latest
