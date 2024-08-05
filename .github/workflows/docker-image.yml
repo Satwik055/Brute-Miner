@@ -33,3 +33,15 @@ jobs:
           context: .
           push: true
           tags: satwik055/brute-miner:latest
+
+  slackNotification:
+    name: Slack Notification
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2.3.0
+      - name: Slack Notification
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_MESSAGE: 'New version of brute miner published to docker hub'
+          SLACK_TITLE: Brute miner new version
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
