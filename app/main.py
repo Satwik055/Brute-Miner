@@ -19,7 +19,7 @@ for handler in logging.getLogger().handlers:
 def main():
     database = SupabaseStudentDatabase()
 
-    for i in range(1200, 1500):
+    for i in range(1130, 1200):
 
         formatted = '{0:04}'.format(i)
         userid = "2023/" + formatted
