@@ -215,3 +215,4 @@ def getStudentDataFromSaksham(userid, password):
     studentDetailsHtml = getStudentDetailsHtml(cookie)
     studentDetailData = parseStudentDetailsHtmlToStudent(studentDetailsHtml)
     return studentDetailData
+

