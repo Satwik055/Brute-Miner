@@ -19,7 +19,7 @@ for handler in logging.getLogger().handlers:
 def main():
     database = SupabaseStudentDatabase()
 
-    for i in range(2000, 2200):
+    for i in range(2502, 2600):
 
         formatted = '{0:04}'.format(i)
         userid = "2023/" + formatted
@@ -84,3 +84,17 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+
+
+    # for i in range(2600, 2700):
+    #     formatted = '{0:04}'.format(i)
+    #     userid = "2023/" + formatted
+    #
+    #     result = checkUserExistence(userid)
+    #     print(f"User {userid}: {result}")
+
+
+
+
